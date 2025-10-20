@@ -1,0 +1,5 @@
+#ifndef METRONOME_CONSTANT_H_
+#define METRONOME_CONSTANT_H_
+
+
+#endif
