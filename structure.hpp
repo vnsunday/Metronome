@@ -3,10 +3,11 @@
 
 /* List of Note/CombinedNote */
 struct Tab {
-    int nNote; // Count 
+    int nCount; // Count 
     char azName[32][6]; /* A B C D E F G */
     unsigned char azNCombined[32];
     unsigned char azOctave[32][6]; /* 0-4 */
+    double azBeat[32]; /* 1: 1 beat; 0.5 Half Beat */
 };
 
 /* A Chord */
@@ -24,6 +25,7 @@ struct ChordNote {
     char szName[6];
     unsigned char capoPosition;
 
+    int nCount; /* Default = 6 */
     char azNote[6];
     unsigned char azOctave[6];
 }

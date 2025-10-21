@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <dynsocc/fundamental/stdex/algorithm.hpp>
 
 using namespace std;
 
@@ -11,14 +12,15 @@ using namespace std;
  *============================================================*/
 int NOTE_VALS[21];
 char NAME[21][5];
+string azNAME[21];
 int chord[100][6];
 int tabs[100][8][6];
 
 /*==================================================*
  * Combination Dictionary
  *      Alternatives
- *        
  *==================================================*/
+
 int N_C = 0;
 string azName[21];
 int nalternative; 
@@ -54,25 +56,89 @@ double equality_ratio(T* p1, T* p2, int n1, int n2) {
 }
 
 int match_one(int* rhythm) {
-
     return 0;
+}
+
+char to_upper(char ch1) {
+    if (ch1 >= 'a' && ch1 <= 'z') {
+        return ch1 + 'A' - 'a';
+    }
+    return ch1;
+}
+
+double equality_score(const Tab& t, const ChordNote& ch) {
+
+    /* Find distinct */
+    string azNIT[21]; // Notes in Tab (distinct)
+    string azNIC[6]; // Notes In Chord
+    int nNIT = 0;
+    int nNIC = 0;
+    char szBuffer[10];
+    int nEQ, nNEQ; // Equality, non-Equality
+
+    /*==================================================
+     * ES1. Get distinct Note-Octave on Tab
+     * ES2. Get distinct Note-Octave on Chord
+     * ES3. Equality score
+     *==================================================*/
+
+    /* Variables For Loop */
+    string strNNO; // Note Name With Octave
+    int nFound;
+    int nIdx;
+
+    // ES1
+    for (int i=0; i<t.nCount; ++i) {
+        /* */
+        for (int j=0; j<t.azNCombined[i]) {
+            sprintf(szBuffer, "%c%d", to_upper(t.azName[i][j]), t.azOctave[i][j]);
+            strNNO = szBuffer;
+
+            if (dynsocc::algorithm::binary_search(azNIT, 0, nNIT, strNNO, nFound) == 0 && nFound >= 0) {
+                dynsocc::algorithm::insert_into_sorted_asc(azNIT, 0, nNIT, strNNO, nIdx);
+            }
+        }
+    }
+
+    // ES2 
+    for (int i=0; i<ch.nCount;i++) {
+        sprintf(szBuffer, "%c%d", to_upper(ch.azName[i]), ch.azOctave[i]);
+        strNNO = szBuffer;
+
+        if (dynsocc::algorithm::binary_search(azNIC, 0, nNIC, strNNO, nFound) == 0 && nFound >= 0) {
+            dynsocc::algorithm::insert_into_sorted_asc(azNIC, 0, nNIC, strNNO, nIdx);
+        }
+    }
+
+    // ES3. Equality Score
+    nEQ = 0;
+    nNEQ = 0;
+
+    for (int i=0; i<nNIT; i++) {
+        for (int j=0; j<nNIC;j++) {
+            if (azNIT[i] == azNIC[j]) {
+                nEQ++;
+                break;
+            }
+        }
+    }
+    
+    return nEQ / nNIT;
 }
 
 int initialize() {
     /*================================================================================
      * Initialization:
      * (1) Note values
-     *     
      * (2) 
      *================================================================================*/
     
-    int N_OneRange = 7; 
-    
-    /*
-        E-F-G-A-B-C
-        E-F-G-H-I-J 
-        C=0
-    */
+    int N_OneRange = 7;
+    /*==================================================
+     *  E-F-G-A-B-C
+     *  E-F-G-H-I-J 
+     *  C=0
+     *==================================================*/
 
     int i, j;
     int const nC1 = 6;
@@ -97,12 +163,10 @@ int initialize() {
         nHertz = 0;
         nAmplitude = 100;        
     }
-
     return 0;
 }
 
 int matched_combination() {
-
     int n1 = 0;
     int n2 = 0;
     nunit = 18;
@@ -118,5 +182,6 @@ int matched_combination() {
 int main(int argc, const char* argv[]) {
     
 
+    szChordDictionary[];
     return 0;
 }

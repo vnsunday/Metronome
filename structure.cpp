@@ -11,3 +11,4 @@ void Chord::changeCapoposition(unsigned char cpPos) {
 Chord::Chord(unsigned char capo_pos=0) {
     changeCapoposition(capo_pos);
 }
+
