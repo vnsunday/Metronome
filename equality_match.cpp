@@ -1,3 +1,4 @@
+#include "structure.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -15,6 +16,10 @@ char NAME[21][5];
 string azNAME[21];
 int chord[100][6];
 int tabs[100][8][6];
+
+Chord azCH[100];
+ChordNote azCN[100];
+int nCH = 0;
 
 /*==================================================*
  * Combination Dictionary
@@ -90,7 +95,7 @@ double equality_score(const Tab& t, const ChordNote& ch) {
     // ES1
     for (int i=0; i<t.nCount; ++i) {
         /* */
-        for (int j=0; j<t.azNCombined[i]) {
+        for (int j=0; j<t.azNCombined[i]; j++) {
             sprintf(szBuffer, "%c%d", to_upper(t.azName[i][j]), t.azOctave[i][j]);
             strNNO = szBuffer;
 
@@ -102,7 +107,7 @@ double equality_score(const Tab& t, const ChordNote& ch) {
 
     // ES2 
     for (int i=0; i<ch.nCount;i++) {
-        sprintf(szBuffer, "%c%d", to_upper(ch.azName[i]), ch.azOctave[i]);
+        sprintf(szBuffer, "%c%d", to_upper(ch.szName[i]), ch.azOctave[i]);
         strNNO = szBuffer;
 
         if (dynsocc::algorithm::binary_search(azNIC, 0, nNIC, strNNO, nFound) == 0 && nFound >= 0) {
@@ -129,8 +134,8 @@ double equality_score(const Tab& t, const ChordNote& ch) {
 int initialize() {
     /*================================================================================
      * Initialization:
-     * (1) Note values
-     * (2) 
+     * I1) Note values
+     * I2) Every Chord
      *================================================================================*/
     
     int N_OneRange = 7;
@@ -163,6 +168,14 @@ int initialize() {
         nHertz = 0;
         nAmplitude = 100;        
     }
+
+    // I2. Every Chord 
+    nCH = 0;
+    Chord A0("A", "D-1;G-1;B-2", 0);
+    Chord A0_1("A", "E-5;A-4;D-2;G-2;B-5", 0);
+    Chord A2("A", "E-5;A-4;E2-5", 2);
+    Chord A5("A", "A-7;D-7;G-6", 5);
+ 
     return 0;
 }
 
@@ -181,7 +194,9 @@ int matched_combination() {
 
 int main(int argc, const char* argv[]) {
     
+    /*========== 
+     */
 
-    szChordDictionary[];
+    
     return 0;
 }

@@ -15,20 +15,21 @@ struct Chord {
     char szName[6]; /* Am7# */
     unsigned char capoPosition;
     unsigned char azPressed[6]; /* Position Pressed */
-                                /* 0: E; 1-A; 2-D; 3-G; 4-B; 5-E */
+                                /* 0: E; 1-A; 2-D; 3-G; 4-B; 5-E2 */
 
     void changeCapoposition(unsigned char cpPos);
     Chord(unsigned char capo_pos=0);
+    Chord(const char* szCHName, const char* string_fret,unsigned char capo_pos=0);
 };
 
 struct ChordNote {
     char szName[6];
     unsigned char capoPosition;
 
-    int nCount; /* Default = 6 */
+    int nCount; /* Default=6 */
     char azNote[6];
     unsigned char azOctave[6];
-}
+};
 
 int Convert(const Chord& ch, ChordNote& cn);
 
