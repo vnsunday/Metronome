@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <dynsocc/fundamental/stdex/algorithm.hpp>
+#include "structure.hpp"
 
 using namespace std;
 
@@ -175,7 +176,11 @@ int initialize() {
     Chord A0_1("A", "E-5;A-4;D-2;G-2;B-5", 0);
     Chord A2("A", "E-5;A-4;E2-5", 2);
     Chord A5("A", "A-7;D-7;G-6", 5);
- 
+
+    azCH[nCH++] = A0;
+    azCH[nCH++] = A0_1;
+    
+
     return 0;
 }
 

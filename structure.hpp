@@ -13,6 +13,7 @@ struct Tab {
 /* A Chord */
 struct Chord {
     char szName[6]; /* Am7# */
+    char szFret[50]; /* String Fret setting . e.g */ 
     unsigned char capoPosition;
     unsigned char azPressed[6]; /* Position Pressed */
                                 /* 0: E; 1-A; 2-D; 3-G; 4-B; 5-E2 */
